@@ -26,3 +26,4 @@ Type: LocalServer32
 .NET Assembly: file:///C:/Program Files/SomeApp/SomeApp.dll
   Method: VulnerableMethod
 =======================
+

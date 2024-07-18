@@ -48,25 +48,7 @@ namespace COMStalker
                     return;
                 }
 
-                string[] defaultMethods = { "Equals", "GetHashCode", "GetType", "ToString" };
-
-                Console.WriteLine($"{ColorBlue}COM Servers Information{ColorReset}");
-                Console.WriteLine($"{ColorGreen}======================={ColorReset}");
-
-                foreach (var server in servers)
-                {
-                    Console.WriteLine($"{ColorYellow}CLSID: {ColorReset}{server.CLSID}");
-                    Console.WriteLine($"{ColorYellow}Path: {ColorReset}{server.ServerPath}");
-                    Console.WriteLine($"{ColorYellow}Type: {ColorReset}{server.Type}");
-                    Console.WriteLine($"{ColorGreen}-----------------------{ColorReset}");
-
-                    if (server.ServerPath.ToLower().Contains("mscoree.dll"))
-                    {
-                        PrintDotNetAssemblyMethods(server, defaultMethods);
-                    }
-
-                    Console.WriteLine($"{ColorGreen}======================={ColorReset}");
-                }
+                DisplayCOMServers(servers);
             }
             catch (Exception ex)
             {
@@ -89,6 +71,29 @@ namespace COMStalker
                 return WMICollection("LocalServer32");
             }
             return null;
+        }
+
+        private static void DisplayCOMServers(List<COMServer> servers)
+        {
+            string[] defaultMethods = { "Equals", "GetHashCode", "GetType", "ToString" };
+
+            Console.WriteLine($"{ColorBlue}COM Servers Information{ColorReset}");
+            Console.WriteLine($"{ColorGreen}======================={ColorReset}");
+
+            foreach (var server in servers)
+            {
+                Console.WriteLine($"{ColorYellow}CLSID: {ColorReset}{server.CLSID}");
+                Console.WriteLine($"{ColorYellow}Path: {ColorReset}{server.ServerPath}");
+                Console.WriteLine($"{ColorYellow}Type: {ColorReset}{server.Type}");
+                Console.WriteLine($"{ColorGreen}-----------------------{ColorReset}");
+
+                if (server.ServerPath.ToLower().Contains("mscoree.dll"))
+                {
+                    PrintDotNetAssemblyMethods(server, defaultMethods);
+                }
+
+                Console.WriteLine($"{ColorGreen}======================={ColorReset}");
+            }
         }
 
         private static void PrintDotNetAssemblyMethods(COMServer server, string[] defaultMethods)
